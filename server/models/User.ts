@@ -1,7 +1,9 @@
 import { DataTypes } from 'sequelize';
+import bcrypt from 'bcrypt';
+
 import sequelize from '../db';
 
-export interface IUser {
+export interface UserModel {
   email: string;
   password: string;
 }
@@ -14,6 +16,11 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+    set(val: string) {
+      const hash = bcrypt.hashSync(val, 10);
+
+      this.setDataValue('password', hash);
+    },
   },
 });
 

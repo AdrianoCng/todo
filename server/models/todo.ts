@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db';
 
-export interface ITodo {
+export interface TodoModel {
   title: string;
-  completed?: string;
+  completed?: boolean;
 }
 
 const Todo = sequelize.define('Todo', {

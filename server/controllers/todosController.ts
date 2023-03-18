@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Todo, { ITodo } from '../models/Todo';
+import Todo, { TodoModel } from '../models/todo';
 
 const todosController = {
   getAllTodos: async (_: Request, res: Response) => {
@@ -30,7 +30,7 @@ const todosController = {
     }
   },
 
-  create: async (req: Request<unknown, unknown, ITodo>, res: Response) => {
+  create: async (req: Request<unknown, unknown, TodoModel>, res: Response) => {
     try {
       const { title, completed } = req.body;
 

@@ -6,6 +6,7 @@ import cors from 'cors';
 import logger from './middlewares/logger';
 import todosRouter from './routes/todos';
 import signupRouter from './routes/signup';
+import loginRouter from './routes/login';
 
 const app = express();
 
@@ -14,7 +15,10 @@ app.use(express.json());
 app.use(logger);
 
 app.use('/api/v1/todos', todosRouter);
+
 app.use('/api/v1/signup', signupRouter);
+
+app.use('/api/v1/login', loginRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

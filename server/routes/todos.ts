@@ -1,10 +1,13 @@
 import { Router } from 'express';
 
 import todosController from '../controllers/todosController';
+import authenticateJWT from '../middlewares/authenticateJWT';
 import validate from '../middlewares/validate';
 import todosRules from '../validations/todosRules';
 
 const todosRouter = Router();
+
+todosRouter.use(authenticateJWT);
 
 todosRouter.get('/', todosController.getAllTodos);
 
