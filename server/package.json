@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": " nodemon",
-    "start:prod": "set PORT=80 tsc && pm2 start dist/index.js --name todo-app",
+    "dev": "nodemon",
+    "start": "node dist/index.js",
     "build": "tsc",
     "format": "prettier --config .prettierrc.json --write ./**/*.ts",
     "lint": "eslint .",
