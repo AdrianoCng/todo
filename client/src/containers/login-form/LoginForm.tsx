@@ -43,6 +43,7 @@ function LoginForm() {
                         type="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                        autoComplete="on"
                     />
                 </Label>
                 <Button type="submit">Login</Button>

@@ -9,7 +9,7 @@ export default (req: UserAuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.sendStatus(401);
+    return res.sendStatus(403);
   }
 
   const accessToken = authHeader.split(' ')[1];

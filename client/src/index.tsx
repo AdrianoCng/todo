@@ -9,6 +9,7 @@ import GlobalStyles, { theme } from "./styles/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { AxiosError } from "axios";
 import { routes } from "./constants";
+import AuthContextProvider from "./contexts/AuthContext";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,7 +19,7 @@ const queryClient = new QueryClient({
                 if (err instanceof AxiosError) {
                     if (!err.response) return;
 
-                    if (err.response.status !== 401) return;
+                    if (err.response.status !== 403) return;
 
                     window.location.assign(routes.login());
                 }
@@ -27,7 +28,7 @@ const queryClient = new QueryClient({
                 if (error instanceof AxiosError) {
                     if (!error.response) return failureCount < 3;
 
-                    if (error.response.status === 401) return false;
+                    if (error.response.status === 403) return false;
                 }
 
                 return failureCount < 3;
@@ -48,7 +49,9 @@ root.render(
             <QueryClientProvider client={queryClient}>
                 <ThemeProvider theme={theme}>
                     <GlobalStyles />
-                    <App />
+                    <AuthContextProvider>
+                        <App />
+                    </AuthContextProvider>
                 </ThemeProvider>
             </QueryClientProvider>
         </BrowserRouter>
