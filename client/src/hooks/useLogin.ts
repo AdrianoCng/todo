@@ -1,7 +1,6 @@
 import { useMutation } from "react-query";
 import { api, ApiError } from "../api";
 import { endpoints } from "../constants";
-import useLocalStorage from "./useLocalStorage";
 
 interface LoginReq {
     email: string;
@@ -14,9 +13,6 @@ interface LoginRes {
 }
 
 export default function useLogin() {
-    const [, setAccessToken] = useLocalStorage("access_token", "");
-    const [, setRefreshToken] = useLocalStorage("refresh_token", "");
-
     const { mutate, ...mutation } = useMutation<LoginRes, ApiError, LoginReq>(
         async (form) => {
             const { data } = await api.post(endpoints.login, form);
@@ -24,8 +20,8 @@ export default function useLogin() {
         },
         {
             onSuccess({ accessToken, refreshToken }) {
-                setAccessToken(accessToken);
-                setRefreshToken(refreshToken);
+                localStorage.setItem("access_token", accessToken);
+                localStorage.setItem("refresh_token", refreshToken);
             },
         }
     );

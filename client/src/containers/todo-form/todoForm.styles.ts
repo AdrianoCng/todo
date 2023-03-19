@@ -7,6 +7,8 @@ export const TodoForm = styled(Form)`
     display: flex;
     gap: 20px;
     width: 100%;
+    margin-top: 50px;
+    justify-content: center;
 
     ${Input} {
         flex: 1;

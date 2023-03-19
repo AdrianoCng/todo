@@ -1,14 +1,14 @@
 import ListItem from "../../components/list-item/ListItem";
 import useTodos from "../../hooks/useTodos";
 import useUpdateTodo from "../../hooks/useUpdateTodo";
-import styles from "./TodoList.module.scss";
+import * as S from "./todoList.styles";
 
 export default function TodoList() {
     const [todos] = useTodos();
     const [updateTodo] = useUpdateTodo();
 
     return (
-        <ul className={styles.ul}>
+        <S.TodoList>
             {todos &&
                 todos.map((todo) => (
                     <ListItem
@@ -21,6 +21,6 @@ export default function TodoList() {
                         }}
                     />
                 ))}
-        </ul>
+        </S.TodoList>
     );
 }

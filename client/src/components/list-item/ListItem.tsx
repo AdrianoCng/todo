@@ -1,7 +1,6 @@
-import classNames from "classnames";
 import useDeleteTodo from "../../hooks/useDeleteTodo";
 import Button from "../button/Button";
-import styles from "./ListItem.module.scss";
+import * as S from "./listItem.styles";
 
 interface Props {
     id: number;
@@ -13,10 +12,11 @@ export default function ListItem({ id, title, completed, onClick }: Props) {
     const [deleteTodo] = useDeleteTodo();
 
     return (
-        <li className={classNames(styles.li, { [styles.completed]: completed })} onClick={onClick}>
+        <S.ListItem onClick={onClick} completed={completed}>
             <span>{title}</span>
 
             <Button
+                type="button"
                 onClick={(e) => {
                     e.stopPropagation();
 
@@ -25,6 +25,6 @@ export default function ListItem({ id, title, completed, onClick }: Props) {
             >
                 Delete
             </Button>
-        </li>
+        </S.ListItem>
     );
 }
