@@ -5,7 +5,7 @@ import App from "./App";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { todosKeys } from "./api";
 import { BrowserRouter } from "react-router-dom";
-import GlobalStyles, { theme } from "./GlobalStyles";
+import GlobalStyles, { theme } from "./styles/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient({

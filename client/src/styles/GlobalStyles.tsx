@@ -7,17 +7,17 @@ const breakpointDesktop = "1200px";
 
 export const theme = {
     colors: {
-        primary: "#7d2f85",
+        primary: "#6a4b87",
         secondary: "#ffffff",
         bgPrimary: "#fff",
-        bgSecondary: "#ededed",
+        bgSecondary: "#f1f1f1",
     },
     fonts: {
         xsm: "0.8rem",
         sm: "1.2rem",
-        md: "1.6rem",
-        lg: "1.8rem",
-        xlg: "2.4rem",
+        md: "1.8rem",
+        lg: "2.4rem",
+        xlg: "3.6rem",
     },
 };
 
@@ -35,7 +35,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
-        background-color: #ededed;
+        background-color: #f1f1f1;
     }
     img, picture, video, canvas, svg {
         display: block;

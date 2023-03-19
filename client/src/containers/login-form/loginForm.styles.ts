@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Form from "../../components/form/Form";
-import { Container } from "../../GlobalStyles";
+import { Container } from "../../styles/GlobalStyles";
 
 export const LoginContainer = styled(Container)`
     height: 100%;
@@ -14,4 +14,5 @@ export const LoginForm = styled(Form)`
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    padding 50px;
 `;

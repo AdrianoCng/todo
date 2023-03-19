@@ -4,17 +4,26 @@ import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Label from "../../components/label/Label";
 import useLogin from "../../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../constants";
 
 function LoginForm() {
     const [login] = useLogin();
-
+    const navigate = useNavigate();
     const [email, setEmail] = useState("test1@gmail.com");
     const [password, setPassword] = useState("123q4aA!a");
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        login({ email, password });
+        login(
+            { email, password },
+            {
+                onSuccess() {
+                    navigate(routes.home);
+                },
+            }
+        );
     };
 
     return (

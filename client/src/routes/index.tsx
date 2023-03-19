@@ -1,18 +1,22 @@
-import Button from "../components/button/Button";
-import Form from "../components/form/Form";
-import Input from "../components/input/Input";
+import styled from "styled-components";
+import TodoForm from "../containers/todo-form/TodoForm";
 import TodoList from "../containers/TodoList/TodoList";
+import { Container } from "../styles/GlobalStyles";
+import { Header } from "../styles/Typography";
 
 export default function Homepage() {
     return (
-        <div className="App">
-            <h1>To-Do List</h1>
+        <FlexContainer>
+            <Header tag="h1">To-Do List</Header>
 
-            <Form>
-                <Input />
-                <Button>Add</Button>
-            </Form>
+            <TodoForm />
             <TodoList />
-        </div>
+        </FlexContainer>
     );
 }
+
+const FlexContainer = styled(Container)`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;

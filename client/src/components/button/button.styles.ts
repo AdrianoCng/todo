@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { ButtonProps } from "./Button";
 
 export const Button = styled.button<ButtonProps>`
-    font-size: ${({ theme }) => theme.fonts.lg};
+    font-size: ${({ theme }) => theme.fonts.md};
     font-weight: bold;
     color: secondary;
     border: 1.5px solid;
