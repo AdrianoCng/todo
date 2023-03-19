@@ -8,10 +8,21 @@ export default function TodoForm() {
     const [addTodo] = useAddTodo();
     const [todo, setTodo] = useState("");
 
+    const resetTodo = () => {
+        setTodo("");
+    };
+
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        addTodo({ title: todo, completed: false });
+        addTodo(
+            { title: todo, completed: false },
+            {
+                onSuccess() {
+                    resetTodo();
+                },
+            }
+        );
     };
 
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (event) =>
