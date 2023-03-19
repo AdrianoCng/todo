@@ -1,13 +1,9 @@
-import classNames from "classnames";
+import * as S from "./button.styles";
 
-import styles from "./Button.module.scss";
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: "primary" | "secondary";
+}
 
-type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
-
-export default function Button({ className, ...props }: Props) {
-    return (
-        <button {...props} className={classNames(styles.button, className)}>
-            {props.children}
-        </button>
-    );
+export default function Button({ variant = "primary", ...props }: ButtonProps) {
+    return <S.Button variant={variant} {...props} />;
 }

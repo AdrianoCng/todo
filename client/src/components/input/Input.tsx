@@ -1,8 +1,6 @@
-import classNames from "classnames";
-
-import styles from "./Input.module.scss";
+import * as S from "./input.styles";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement>;
 export default function Input({ ...props }: Props) {
-    return <input {...props} className={classNames(styles.input, props.className)} />;
+    return <S.Input {...props} />;
 }
