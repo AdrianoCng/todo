@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { TokenPayload } from '../helpers';
 
 export interface UserAuthRequest extends Request {
-  user?: unknown;
+  user?: TokenPayload;
 }
 
 export default (req: UserAuthRequest, res: Response, next: NextFunction) => {
@@ -17,11 +18,11 @@ export default (req: UserAuthRequest, res: Response, next: NextFunction) => {
   const secretAccessToken = process.env.SECRET_ACCESS_TOKEN || '';
 
   jwt.verify(accessToken, secretAccessToken, (err, user) => {
-    if (err) {
+    if (err || !user) {
       return res.sendStatus(403);
     }
 
-    req.user = user;
+    req.user = user as TokenPayload;
 
     next();
   });

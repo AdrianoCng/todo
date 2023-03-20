@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import Todo, { TodoModel } from '../models/Todo';
+import { UserAuthRequest } from '../middlewares/authenticateJWT';
+import Todo from '../models/Todo';
 
 const todosController = {
-  getAllTodos: async (_: Request, res: Response) => {
+  getAllTodos: async (req: UserAuthRequest, res: Response) => {
     try {
-      const todos = await Todo.findAll();
+      const user = req.user;
+
+      const todos = await Todo.findAll({ where: { userID: user?.userID } });
 
       res.json(todos);
     } catch (error) {
@@ -30,11 +33,13 @@ const todosController = {
     }
   },
 
-  create: async (req: Request<unknown, unknown, TodoModel>, res: Response) => {
+  create: async (req: UserAuthRequest, res: Response) => {
     try {
       const { title, completed } = req.body;
 
-      const newTodo = await Todo.create({ title, completed });
+      const user = req.user;
+
+      const newTodo = await Todo.create({ title, completed, userID: user?.userID });
 
       res.status(201).json(newTodo);
     } catch (error) {

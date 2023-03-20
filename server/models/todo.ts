@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db';
+import User from './User';
 
 export interface TodoModel {
   title: string;
@@ -16,6 +17,10 @@ const Todo = sequelize.define('Todo', {
     allowNull: true,
     defaultValue: false,
   },
+});
+
+Todo.belongsTo(User, {
+  foreignKey: 'userID',
 });
 
 export default Todo;

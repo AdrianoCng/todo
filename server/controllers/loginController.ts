@@ -28,7 +28,7 @@ const loginController = {
 
       const payload = {
         userID,
-        username: email,
+        email,
       };
 
       const { accessToken, refreshToken } = generateTokens(payload);
@@ -37,7 +37,7 @@ const loginController = {
 
       await RefreshToken.create({
         userID,
-        userName: email,
+        email,
         refreshToken,
       });
 

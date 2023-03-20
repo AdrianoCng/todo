@@ -5,7 +5,7 @@ import sequelize from '../db';
 import User from './User';
 
 const RefreshToken = sequelize.define('RefreshToken', {
-  userName: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },

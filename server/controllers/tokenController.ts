@@ -15,7 +15,7 @@ const tokenController = {
         return res.sendStatus(403);
       }
 
-      const { userID, username } = decode as TokenPayload;
+      const { userID, email } = decode as TokenPayload;
 
       const tokenInDB = await RefreshToken.findOne({ where: { userID } });
 
@@ -25,7 +25,7 @@ const tokenController = {
 
       const payload = {
         userID,
-        username,
+        email,
       };
 
       const tokens = generateTokens(payload);
