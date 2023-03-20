@@ -14,7 +14,6 @@ import AuthContextProvider from "./contexts/AuthContext";
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            // Temporarely logout if not authorized
             onError(err) {
                 if (err instanceof AxiosError) {
                     if (!err.response) return;
@@ -26,12 +25,12 @@ const queryClient = new QueryClient({
             },
             retry(failureCount, error) {
                 if (error instanceof AxiosError) {
-                    if (!error.response) return failureCount < 3;
+                    if (!error.response) return failureCount === 1;
 
                     if (error.response.status === 403) return false;
                 }
 
-                return failureCount < 3;
+                return failureCount === 1;
             },
         },
         mutations: {

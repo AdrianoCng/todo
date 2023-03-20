@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 import RefreshToken from '../models/RefreshToken';
+import { generateTokens } from '../helpers';
 
 const loginController = {
   login: async (req: Request, res: Response) => {
@@ -26,16 +26,12 @@ const loginController = {
         return res.status(403).send('Password do not match.');
       }
 
-      const secretAccessToken = process.env.SECRET_ACCESS_TOKEN || '';
-      const secretRefreshToken = process.env.SECRET_REFRESH_TOKEN || '';
-
       const payload = {
         sub: userID,
-        name: email,
+        username: email,
       };
 
-      const accessToken = jwt.sign(payload, secretAccessToken, { expiresIn: '5m' });
-      const refreshToken = jwt.sign(payload, secretRefreshToken, { expiresIn: '30d' });
+      const { accessToken, refreshToken } = generateTokens(payload);
 
       RefreshToken.destroy({ where: { userID } });
 
@@ -45,7 +41,7 @@ const loginController = {
         refreshToken,
       });
 
-      res.status(200).json({ accessToken, refreshToken });
+      res.status(200).json({ accessToken, refreshToken, userID });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

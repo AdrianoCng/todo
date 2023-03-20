@@ -4,9 +4,11 @@ import express from 'express';
 import cors from 'cors';
 
 import logger from './middlewares/logger';
+
 import todosRouter from './routes/todos';
 import signupRouter from './routes/signup';
 import loginRouter from './routes/login';
+import tokenRouter from './routes/token';
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.use('/api/v1/todos', todosRouter);
 app.use('/api/v1/signup', signupRouter);
 
 app.use('/api/v1/login', loginRouter);
+
+app.use('/api/v1/token', tokenRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
