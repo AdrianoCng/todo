@@ -11,7 +11,6 @@ interface LoginReq {
 interface LoginRes {
     accessToken: string;
     refreshToken: string;
-    userID: number;
 }
 
 export default function useLogin() {
@@ -23,10 +22,9 @@ export default function useLogin() {
             return data;
         },
         {
-            onSuccess({ accessToken, refreshToken, userID }) {
+            onSuccess({ accessToken, refreshToken }) {
                 localStorage.setItem("access_token", accessToken);
                 localStorage.setItem("refresh_token", refreshToken);
-                localStorage.setItem("user_id", `${userID}`);
 
                 setIsAuthenticated(true);
             },

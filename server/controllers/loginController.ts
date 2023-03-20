@@ -27,7 +27,7 @@ const loginController = {
       }
 
       const payload = {
-        sub: userID,
+        userID,
         username: email,
       };
 
@@ -41,7 +41,7 @@ const loginController = {
         refreshToken,
       });
 
-      res.status(200).json({ accessToken, refreshToken, userID });
+      res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

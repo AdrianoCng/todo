@@ -3,16 +3,14 @@ import { endpoints } from "./constants";
 
 export const refreshToken = async () => {
     const refresh_token = localStorage.getItem("refresh_token");
-    const userID = localStorage.getItem("user_id");
 
-    if (!refresh_token || !userID) {
+    if (!refresh_token) {
         return Promise.reject();
     }
 
     try {
         const { data } = await api.post(endpoints.refreshToken, {
             refreshToken: refresh_token,
-            userID,
         });
 
         localStorage.setItem("access_token", data.accessToken);

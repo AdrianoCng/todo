@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-interface TokenPayload {
-  sub: number;
+export interface TokenPayload {
+  userID: number;
   username: string;
 }
 
