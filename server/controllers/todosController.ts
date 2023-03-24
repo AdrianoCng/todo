@@ -10,8 +10,8 @@ const todosController = {
       const todos = await Todo.findAll({ where: { userID: user?.userID } });
 
       res.json(todos);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
       res.sendStatus(500);
     }
   },

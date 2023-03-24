@@ -23,4 +23,6 @@ Todo.belongsTo(User, {
   foreignKey: 'userID',
 });
 
+console.log('log');
+
 export default Todo;
