@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 
 import User from '../models/User';
 import RefreshToken from '../models/RefreshToken';
@@ -9,22 +8,20 @@ const loginController = {
   login: async (req: Request, res: Response) => {
     try {
       const email = req.body.email;
-      const password = req.body.password;
 
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        return res.status(404).send('User does not exists.');
+        return res.status(404).json({
+          errors: [
+            {
+              msg: 'User does not exists',
+            },
+          ],
+        });
       }
 
       const userID = user.dataValues.id;
-      const userPassword = user.dataValues.password;
-
-      const matched = await bcrypt.compare(password, userPassword);
-
-      if (!matched) {
-        return res.status(403).send('Password do not match.');
-      }
 
       const payload = {
         userID,

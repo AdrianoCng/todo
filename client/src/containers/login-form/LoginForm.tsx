@@ -1,17 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import * as S from "./loginForm.styles";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
-import Label from "../../components/label/Label";
 import useLogin from "../../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
 import { routes } from "../../constants";
+import { ApiError } from "../../api";
 
 function LoginForm() {
     const [login] = useLogin();
     const navigate = useNavigate();
     const [email, setEmail] = useState("test1@gmail.com");
     const [password, setPassword] = useState("123q4aA!a");
+    const [errors, setErrors] = useState<ApiError["errors"]>([]);
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -22,6 +24,13 @@ function LoginForm() {
                 onSuccess() {
                     navigate(routes.home);
                 },
+                onError(err) {
+                    const errors = err.response?.data.errors;
+
+                    if (!errors) return;
+
+                    setErrors(errors);
+                },
             }
         );
     };
@@ -29,23 +38,24 @@ function LoginForm() {
     return (
         <S.LoginContainer>
             <S.LoginForm onSubmit={handleOnSubmit}>
-                <Label>
-                    Email:
-                    <Input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                </Label>
-                <Label>
-                    Password:
-                    <Input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        autoComplete="on"
-                    />
-                </Label>
+                <Input
+                    type="email"
+                    value={email}
+                    name="email"
+                    label="Email:"
+                    onChange={(event) => setEmail(event.target.value)}
+                    error={errors.find((err) => err.param === "email")?.msg}
+                />
+                <Input
+                    type="password"
+                    value={password}
+                    name="password"
+                    label="Password:"
+                    onChange={(event) => setPassword(event.target.value)}
+                    autoComplete="on"
+                    error={errors.find((err) => err.param === "password")?.msg}
+                />
+
                 <Button type="submit">Login</Button>
             </S.LoginForm>
         </S.LoginContainer>

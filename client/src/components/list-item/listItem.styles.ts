@@ -16,6 +16,7 @@ export const ListItem = styled.li<Props>`
     cursor: pointer;
     background-color: ${({ theme }) => theme.colors.bgPrimary};
     transition: background-color 0.3s ease;
+    text-transform: capitalize;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -25,6 +26,7 @@ export const ListItem = styled.li<Props>`
         completed &&
         `
     background-color: rgba(0, 0, 0, 0.1);
+    opacity: 0.5;
 
     span {
         text-decoration: line-through;

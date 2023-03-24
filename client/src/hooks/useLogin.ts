@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useMutation } from "react-query";
 import { api, ApiError } from "../api";
 import { endpoints } from "../constants";
@@ -16,7 +17,7 @@ interface LoginRes {
 export default function useLogin() {
     const { setIsAuthenticated } = useAuthContext();
 
-    const { mutate, ...mutation } = useMutation<LoginRes, ApiError, LoginReq>(
+    const { mutate, ...mutation } = useMutation<LoginRes, AxiosError<ApiError>, LoginReq>(
         async (form) => {
             const { data } = await api.post(endpoints.login, form);
             return data;
