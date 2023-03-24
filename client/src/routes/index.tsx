@@ -35,11 +35,13 @@ const FlexContainer = styled(Container)`
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 `;
 
 const Nav = styled.nav`
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: 20px 40px;
+    padding: 0 40px;
 `;
