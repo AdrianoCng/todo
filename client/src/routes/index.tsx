@@ -5,19 +5,19 @@ import { routes } from "../constants";
 import TodoForm from "../containers/todo-form/TodoForm";
 import TodoList from "../containers/TodoList/TodoList";
 import { Container } from "../styles/GlobalStyles";
+import { logout } from "../utils";
 
 export default function Homepage() {
     const navigate = useNavigate();
-    const logout = () => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+    const handleLogout = () => {
+        logout();
 
         navigate(routes.login());
     };
 
     return (
         <FlexContainer>
-            <Button type="button" variant="secondary" onClick={logout}>
+            <Button type="button" variant="secondary" onClick={handleLogout}>
                 Logout
             </Button>
             <TodoForm />

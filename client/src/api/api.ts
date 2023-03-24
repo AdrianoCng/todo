@@ -1,9 +1,9 @@
 import axios from "axios";
 
 import { endpoints } from "../constants";
-import { refreshToken } from "../utils";
+import { logout } from "../utils";
 
-const baseURL =
+export const baseURL =
     process.env.NODE_ENV === "development"
         ? "http://localhost:5000/api/v1"
         : "https://todo-app-123.herokuapp.com/api/v1";
@@ -25,29 +25,55 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+let isRefreshing = false;
+let refreshSubscribers: ((token: any) => void)[] = [];
+
 api.interceptors.response.use(
-    (res) => res,
-    async (error) => {
+    (response) => {
+        return response;
+    },
+    (error) => {
         const originalRequest = error.config;
+        const refreshToken = localStorage.getItem("refresh_token");
 
-        const unAuthorized = [403, 401].includes(error.response.status);
-
-        if (
-            unAuthorized &&
-            !originalRequest._retry &&
-            originalRequest.url !== endpoints.refreshToken
-        ) {
-            originalRequest._retry = true;
-
-            try {
-                const accessToken = await refreshToken();
-
-                originalRequest.headers["Authorization"] = "Bearer " + accessToken;
-
-                return api(originalRequest);
-            } catch (err) {
-                return Promise.reject(error);
+        if (error.response.status === 403 && !originalRequest._retry && refreshToken) {
+            if (isRefreshing) {
+                return new Promise(function (resolve, reject) {
+                    refreshSubscribers.push(function (token) {
+                        originalRequest.headers.Authorization = "Bearer " + token;
+                        resolve(api(originalRequest));
+                    });
+                });
             }
+
+            isRefreshing = true;
+
+            return new Promise(function (resolve, reject) {
+                axios
+                    .post(baseURL + endpoints.refreshToken, { refreshToken })
+                    .then((response) => {
+                        const accessToken = response.data.accessToken;
+                        const refreshToken = response.data.refreshToken;
+
+                        localStorage.setItem("access_token", accessToken);
+                        localStorage.setItem("refresh_token", refreshToken);
+
+                        originalRequest.headers.Authorization = "Bearer " + accessToken;
+
+                        // Call all the subscribers with the new token
+                        refreshSubscribers.forEach((subscriber) => subscriber(accessToken));
+                        refreshSubscribers = [];
+
+                        resolve(api(originalRequest));
+                    })
+                    .catch((error) => {
+                        logout();
+                        reject(error);
+                    })
+                    .finally(() => {
+                        isRefreshing = false;
+                    });
+            });
         }
 
         return Promise.reject(error);
