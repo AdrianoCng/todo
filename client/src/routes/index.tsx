@@ -1,24 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/button/Button";
-import { routes } from "../constants";
 import TodoForm from "../containers/todo-form/TodoForm";
 import TodoList from "../containers/TodoList/TodoList";
+import useLogout from "../hooks/useLogout";
 import { Container } from "../styles/GlobalStyles";
-import { logout } from "../utils";
 
 export default function Homepage() {
-    const navigate = useNavigate();
+    const [logout, { isLoading }] = useLogout();
 
     const handleLogout = () => {
-        logout().then(() => {
-            navigate(routes.login());
-        });
+        logout();
     };
 
     return (
         <FlexContainer>
-            <Button type="button" variant="secondary" onClick={handleLogout}>
+            <Button type="button" variant="secondary" onClick={handleLogout} disabled={isLoading}>
                 Logout
             </Button>
             <TodoForm />
