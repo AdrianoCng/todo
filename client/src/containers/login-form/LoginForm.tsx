@@ -9,7 +9,7 @@ import { routes } from "../../constants";
 import { ApiError } from "../../api";
 
 function LoginForm() {
-    const [login] = useLogin();
+    const [login, { isLoading }] = useLogin();
     const navigate = useNavigate();
     const [email, setEmail] = useState("test1@gmail.com");
     const [password, setPassword] = useState("123q4aA!a");
@@ -56,7 +56,9 @@ function LoginForm() {
                     error={errors.find((err) => err.param === "password")?.msg}
                 />
 
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isLoading}>
+                    Login
+                </Button>
             </S.LoginForm>
         </S.LoginContainer>
     );

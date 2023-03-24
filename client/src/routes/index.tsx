@@ -9,10 +9,11 @@ import { logout } from "../utils";
 
 export default function Homepage() {
     const navigate = useNavigate();
-    const handleLogout = () => {
-        logout();
 
-        navigate(routes.login());
+    const handleLogout = () => {
+        logout().then(() => {
+            navigate(routes.login());
+        });
     };
 
     return (
