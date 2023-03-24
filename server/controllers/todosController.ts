@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserAuthRequest } from '../middlewares/authenticateJWT';
-import Todo from '../models/Todo';
+import Todo from '../models/todo';
 
 const todosController = {
   getAllTodos: async (req: UserAuthRequest, res: Response) => {
