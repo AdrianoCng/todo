@@ -1,43 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import * as S from "./loginForm.styles";
+import { ApiError } from "../../api";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
-import useLogin from "../../hooks/useLogin";
-import { routes } from "../../constants";
-import { ApiError } from "../../api";
 import withCenteredContainer from "../../hoc/withCenteredContainer";
+import * as S from "./signUpForm.styles";
 
-export default withCenteredContainer(function LoginForm() {
-    const [login, { isLoading }] = useLogin();
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("test1@gmail.com");
-    const [password, setPassword] = useState("123q4aA!a");
+export default withCenteredContainer(function SignUpForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState<ApiError["errors"]>([]);
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        login(
-            { email, password },
-            {
-                onSuccess() {
-                    navigate(routes.home);
-                },
-                onError(err) {
-                    const errors = err.response?.data.errors;
-
-                    if (!errors) return;
-
-                    setErrors(errors);
-                },
-            }
-        );
+        setErrors([]);
     };
 
     return (
-        <S.LoginForm onSubmit={handleOnSubmit}>
+        <S.SignUpForm onSubmit={handleOnSubmit}>
             <Input
                 type="email"
                 value={email}
@@ -56,9 +37,19 @@ export default withCenteredContainer(function LoginForm() {
                 error={errors.find((err) => err.param === "password")?.msg}
             />
 
-            <Button type="submit" disabled={isLoading}>
-                Login
+            <Input
+                type="password"
+                value={confirmPassword}
+                name="confirm-password"
+                label="Confirm Password:"
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                autoComplete="on"
+                error={errors.find((err) => err.param === "password")?.msg}
+            />
+
+            <Button type="submit" disabled={false}>
+                Sign Up
             </Button>
-        </S.LoginForm>
+        </S.SignUpForm>
     );
 });

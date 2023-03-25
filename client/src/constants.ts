@@ -10,4 +10,7 @@ export const routes = {
     login() {
         return `${this.home}/login`;
     },
+    signup() {
+        return `${this.home}/signup`;
+    },
 };
