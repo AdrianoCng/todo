@@ -14,7 +14,7 @@ export const Input = styled.input`
 
 export const InputError = styled.span`
     color: red;
-    font-size: ${({ theme }) => theme.fonts.xsm};
+    font-size: ${({ theme }) => theme.fonts.sm};
 `;
 
 export const Label = styled.label`

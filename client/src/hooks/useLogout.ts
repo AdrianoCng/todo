@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { endpoints } from "./../constants";
 import { api } from "../api";
@@ -7,6 +7,7 @@ import { logout } from "../utils";
 
 export default function useLogout() {
     const { setIsAuthenticated } = useAuthContext();
+    const queryClient = useQueryClient();
 
     const { mutate, ...mutation } = useMutation(
         async () => {
@@ -19,6 +20,7 @@ export default function useLogout() {
                 logout();
 
                 setIsAuthenticated(false);
+                queryClient.invalidateQueries();
             },
         }
     );

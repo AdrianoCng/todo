@@ -3,6 +3,7 @@ export const endpoints = {
     login: "/login",
     logout: "/logout",
     refreshToken: "/token",
+    signUp: "/signup",
 };
 
 export const routes = {

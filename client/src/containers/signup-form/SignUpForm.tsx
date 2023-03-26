@@ -3,9 +3,11 @@ import { ApiError } from "../../api";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import withCenteredContainer from "../../hoc/withCenteredContainer";
+import useSignUp from "../../hooks/useSignUp";
 import * as S from "./signUpForm.styles";
 
 export default withCenteredContainer(function SignUpForm() {
+    const [signUp, signUpMutation] = useSignUp();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,7 +16,27 @@ export default withCenteredContainer(function SignUpForm() {
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        setErrors([]);
+        signUp(
+            {
+                email,
+                password,
+                confirmPassword,
+            },
+            {
+                onSuccess() {
+                    setErrors([]);
+                },
+                onError(error) {
+                    if (!error.response?.data) return;
+
+                    const errors = error.response?.data.errors;
+
+                    if (!errors) return;
+
+                    setErrors(errors);
+                },
+            }
+        );
     };
 
     return (
@@ -40,14 +62,14 @@ export default withCenteredContainer(function SignUpForm() {
             <Input
                 type="password"
                 value={confirmPassword}
-                name="confirm-password"
+                name="confirmPassword"
                 label="Confirm Password:"
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 autoComplete="on"
-                error={errors.find((err) => err.param === "password")?.msg}
+                error={errors.find((err) => err.param === "confirmPassword")?.msg}
             />
 
-            <Button type="submit" disabled={false}>
+            <Button type="submit" disabled={signUpMutation.isLoading}>
                 Sign Up
             </Button>
         </S.SignUpForm>

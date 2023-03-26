@@ -17,7 +17,11 @@ interface LoginRes {
 export default function useLogin() {
     const { setIsAuthenticated } = useAuthContext();
 
-    const { mutate, ...mutation } = useMutation<LoginRes, AxiosError<ApiError>, LoginReq>(
+    const { mutate, ...mutation } = useMutation<
+        LoginRes,
+        AxiosError<ApiError | undefined>,
+        LoginReq
+    >(
         async (form) => {
             const { data } = await api.post(endpoints.login, form);
             return data;

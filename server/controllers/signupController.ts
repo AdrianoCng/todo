@@ -10,7 +10,16 @@ const signupController = {
       const user = await User.findOne({ where: { email } });
 
       if (user) {
-        return res.status(409).send('User already exists.');
+        return res.status(409).json({
+          errors: [
+            {
+              location: 'body',
+              msg: 'User already exists',
+              param: 'email',
+              value: email,
+            },
+          ],
+        });
       }
 
       const userCreated = await User.create({

@@ -26,6 +26,8 @@ export default withCenteredContainer(function LoginForm() {
                     navigate(routes.home);
                 },
                 onError(err) {
+                    if (!err.response?.data) return;
+
                     const errors = err.response?.data.errors;
 
                     if (!errors) return;

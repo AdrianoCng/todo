@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useQuery } from "react-query";
 
 import { todosKeys, api, ApiError } from "../api";
@@ -11,11 +12,14 @@ interface TodoRes {
     updatedAt: string;
 }
 export default function useTodos() {
-    const { data, ...query } = useQuery<TodoRes[], ApiError>(todosKeys.all(), async () => {
-        const { data } = await api.get(endpoints.todos);
+    const { data, ...query } = useQuery<TodoRes[], AxiosError<ApiError | undefined>>(
+        todosKeys.all(),
+        async () => {
+            const { data } = await api.get(endpoints.todos);
 
-        return data;
-    });
+            return data;
+        }
+    );
 
     return [data, query] as const;
 }
