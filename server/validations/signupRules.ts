@@ -1,4 +1,5 @@
 import { body } from 'express-validator';
+import User from '../models/User';
 
 export default {
   body: [
@@ -8,6 +9,15 @@ export default {
       .withMessage('Email is required')
       .isEmail()
       .withMessage('Not a valid email')
+      .custom(async (email) => {
+        const user = await User.findOne({ where: { email } });
+
+        if (user) {
+          throw new Error('User already exists');
+        }
+
+        return true;
+      })
       .normalizeEmail()
       .trim(),
     body('password')
