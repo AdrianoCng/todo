@@ -22,7 +22,7 @@ export const Label = styled.label`
     flex-direction: column;
     justify-content: flex-start;
     gap: 5px;
-    font-size: ${({ theme }) => theme.fonts.lg};
+    font-size: ${({ theme }) => theme.fonts.md};
     font-weight: bold;
     width: 100%;
 }

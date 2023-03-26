@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ApiError } from "../../api";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
+import AnchorTag from "../../components/link/Link";
+import { routes } from "../../constants";
 import withCenteredContainer from "../../hoc/withCenteredContainer";
 import useSignUp from "../../hooks/useSignUp";
 import * as S from "./signUpForm.styles";
@@ -68,6 +70,8 @@ export default withCenteredContainer(function SignUpForm() {
                 autoComplete="on"
                 error={errors.find((err) => err.param === "confirmPassword")?.msg}
             />
+
+            <AnchorTag to={routes.login()}>Login</AnchorTag>
 
             <Button type="submit" disabled={signUpMutation.isLoading}>
                 Sign Up

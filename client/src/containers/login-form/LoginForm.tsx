@@ -8,6 +8,7 @@ import useLogin from "../../hooks/useLogin";
 import { routes } from "../../constants";
 import { ApiError } from "../../api";
 import withCenteredContainer from "../../hoc/withCenteredContainer";
+import AnchorTag from "../../components/link/Link";
 
 export default withCenteredContainer(function LoginForm() {
     const [login, { isLoading }] = useLogin();
@@ -57,6 +58,8 @@ export default withCenteredContainer(function LoginForm() {
                 autoComplete="on"
                 error={errors.find((err) => err.param === "password")?.msg}
             />
+
+            <AnchorTag to={routes.signup()}>Create an account</AnchorTag>
 
             <Button type="submit" disabled={isLoading}>
                 Login
