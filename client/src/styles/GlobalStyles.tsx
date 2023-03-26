@@ -1,9 +1,9 @@
 import styled, { createGlobalStyle } from "styled-components";
 
-const breakpointMobile = "576px";
-const breakpointTablet = "768px";
-const breakpointLaptop = "992px";
-const breakpointDesktop = "1200px";
+export const breakpointMobile = "576px";
+export const breakpointTablet = "768px";
+export const breakpointLaptop = "992px";
+export const breakpointDesktop = "1200px";
 
 export const theme = {
     colors: {
