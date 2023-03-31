@@ -8,3 +8,8 @@ export const TodoList = styled.ul`
     flex-direction: column;
     gap: 20px;
 `;
+
+export const Paragraph = styled.p`
+    font-size: ${({ theme }) => theme.fonts.md};
+    text-align: center;
+`;

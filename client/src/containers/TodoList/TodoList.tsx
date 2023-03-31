@@ -4,23 +4,34 @@ import useUpdateTodo from "../../hooks/useUpdateTodo";
 import * as S from "./todoList.styles";
 
 export default function TodoList() {
-    const [todos] = useTodos();
+    const [todos, { isError, isLoading }] = useTodos();
     const [updateTodo] = useUpdateTodo();
 
-    return (
-        <S.TodoList>
-            {todos &&
-                todos.map((todo) => (
-                    <ListItem
-                        key={todo.id}
-                        {...todo}
-                        onClick={() => {
-                            const newTodo = { ...todo, completed: !todo.completed };
+    const renderTodos = () => {
+        if (isLoading) {
+            return <S.Paragraph>Getting your to dos. Please wait...</S.Paragraph>;
+        }
 
-                            updateTodo(newTodo);
-                        }}
-                    />
-                ))}
-        </S.TodoList>
-    );
+        if (isError) {
+            return <S.Paragraph>Error fetching data.</S.Paragraph>;
+        }
+
+        if (!todos || todos?.length < 1) {
+            return <S.Paragraph>No to-dos. Add a new to-do!</S.Paragraph>;
+        }
+
+        return todos.map((todo) => (
+            <ListItem
+                key={todo.id}
+                {...todo}
+                onClick={() => {
+                    const newTodo = { ...todo, completed: !todo.completed };
+
+                    updateTodo(newTodo);
+                }}
+            />
+        ));
+    };
+
+    return <S.TodoList>{renderTodos()}</S.TodoList>;
 }

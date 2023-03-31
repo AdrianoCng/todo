@@ -5,7 +5,7 @@ import useAddTodo from "../../hooks/useAddTodo";
 import * as S from "./todoForm.styles";
 
 export default function TodoForm() {
-    const [addTodo] = useAddTodo();
+    const [addTodo, { isLoading }] = useAddTodo();
     const [todo, setTodo] = useState("");
 
     const resetTodo = () => {
@@ -31,7 +31,9 @@ export default function TodoForm() {
     return (
         <S.TodoForm onSubmit={handleOnSubmit}>
             <Input value={todo} onChange={handleOnChange} />
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Adding" : "Add"}
+            </Button>
         </S.TodoForm>
     );
 }

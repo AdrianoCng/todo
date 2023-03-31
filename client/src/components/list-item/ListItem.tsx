@@ -9,7 +9,7 @@ interface Props {
     onClick?: () => void;
 }
 export default function ListItem({ id, title, completed, onClick }: Props) {
-    const [deleteTodo] = useDeleteTodo();
+    const [deleteTodo, { isLoading }] = useDeleteTodo();
 
     return (
         <S.ListItem onClick={onClick} completed={completed}>
@@ -22,8 +22,9 @@ export default function ListItem({ id, title, completed, onClick }: Props) {
 
                     deleteTodo(id);
                 }}
+                disabled={isLoading}
             >
-                Delete
+                {isLoading ? "Deleting..." : "Delete"}
             </Button>
         </S.ListItem>
     );

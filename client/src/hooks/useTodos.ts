@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { todosKeys, api, ApiError } from "../api";
 import { endpoints } from "../constants";
 
-interface TodoRes {
+export interface TodoRes {
     id: number;
     title: string;
     completed?: boolean;
