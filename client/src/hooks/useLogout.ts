@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { endpoints } from "./../constants";
-import { api, todosKeys } from "../api";
+import { api } from "../api";
 import { useAuthContext } from "../contexts/AuthContext";
 import { logout } from "../utils";
 
@@ -20,7 +20,7 @@ export default function useLogout() {
                 logout();
 
                 setIsAuthenticated(false);
-                queryClient.invalidateQueries(todosKeys.all());
+                queryClient.removeQueries();
             },
         }
     );
